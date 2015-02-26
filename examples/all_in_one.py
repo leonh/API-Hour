@@ -13,7 +13,8 @@ class Container(api_hour.Container):
         super().__init__(*args, **kwargs)
         # Declare HTTP server
         self.servers['http'] = aiohttp.web.Application(loop=kwargs['loop'])
-        self.servers['http'].ah_container = self  # keep a reference in HTTP server to Container
+        # keep a reference in HTTP server to Container
+        self.servers['http'].ah_container = self
 
         # Define HTTP routes
         self.servers['http'].router.add_route('GET',
@@ -21,7 +22,8 @@ class Container(api_hour.Container):
                                               self.index)
 
     # A HTTP handler example
-    # More documentation: http://aiohttp.readthedocs.org/en/latest/web.html#handler
+    # More documentation:
+    # http://aiohttp.readthedocs.org/en/latest/web.html#handler
     @asyncio.coroutine
     def index(self, request):
         message = 'Hello World !'
@@ -42,9 +44,11 @@ class Container(api_hour.Container):
 
 
     def make_servers(self):
-        # This method is used by api_hour command line to bind your HTTP server on socket
-        return [self.servers['http'].make_handler(logger=self.worker.log,
-                                                  debug=self.worker.cfg.debug,
-                                                  keep_alive=self.worker.cfg.keepalive,
-                                                  access_log=self.worker.log.access_log,
-                                                  access_log_format=self.worker.cfg.access_log_format)]
+        # This method is used by api_hour command line
+        # to bind your HTTP server on socket
+        return [self.servers['http'].make_handler(
+            logger=self.worker.log,
+            debug=self.worker.cfg.debug,
+            keep_alive=self.worker.cfg.keepalive,
+            access_log=self.worker.log.access_log,
+            access_log_format=self.worker.cfg.access_log_format)]
