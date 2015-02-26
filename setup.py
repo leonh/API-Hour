@@ -8,7 +8,8 @@ __docformat__ = 'rst'
 PY_VER = sys.version_info
 
 if PY_VER < (3, 3, 0):
-    raise RuntimeError("api_hour doesn't support Python earlier than 3.3.0, current Python version is: %s" % PY_VER)
+    raise RuntimeError("api_hour doesn't support Python earlier "
+                       "than 3.3.0, current Python version is: %s" % PY_VER)
 
 if PY_VER >= (3, 4):
     install_requires = []
@@ -16,6 +17,7 @@ else:
     install_requires = ['asyncio']
 
 install_requires += ['gunicorn', 'PyYAML', 'setproctitle']
+
 
 def read(f):
     return open(os.path.join(os.path.dirname(__file__), f)).read().strip()
@@ -64,7 +66,8 @@ setup(name='api_hour',
       author_email='gmludo@gmail.com',
       url='http://www.api-hour.io',
       download_url='https://pypi.python.org/pypi/api_hour',
-      keywords = ['asyncio', 'performance', 'efficient', 'web', 'service', 'rest', 'json', 'daemon', 'application'],
+      keywords = ['asyncio', 'performance', 'efficient', 'web', 'service',
+                  'rest', 'json', 'daemon', 'application'],
       license='Apache 2',
       packages=find_packages(),
       install_requires=install_requires,
@@ -76,4 +79,4 @@ setup(name='api_hour',
       [console_scripts]
       api_hour=api_hour.application:run
       """,
-)
+      )
