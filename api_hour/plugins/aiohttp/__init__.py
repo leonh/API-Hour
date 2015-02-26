@@ -5,6 +5,7 @@ try:
 except ImportError:
     import json
 
+
 class JSON(Response):
     """Serialize response to JSON with aiohttp.web"""
 

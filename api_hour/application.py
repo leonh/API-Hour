@@ -1,4 +1,5 @@
-# This file is part of API-Hour, forked from gunicorn/app/wsgiapp.py released under the MIT license.
+# This file is part of API-Hour,
+# forked from gunicorn/app/wsgiapp.py released under the MIT license.
 import logging
 import os
 import sys
@@ -25,17 +26,22 @@ class Application(GunicornApp):
                                       'etc',
                                       self.app_uri.split(":", 1)[0])
             if os.path.exists(config_dir):
-                self.cfg.set('config_dir', config_dir)  # Define dev etc folder as default config directory
+                # Define dev etc folder as default config directory
+                self.cfg.set('config_dir', config_dir)
 
             # generate config_dir directly: egg or chicken problem
             if opts.config_dir:
                 self.cfg.set('config_dir', opts.config_dir)
 
             if not opts.config:
-                opts.config = os.path.join(self.cfg.config_dir, 'api_hour/gunicorn_conf.py')
+                opts.config = os.path.join(
+                    self.cfg.config_dir,
+                    'api_hour/gunicorn_conf.py')
 
             if not self.cfg.logconfig:
-                self.cfg.set('logconfig', os.path.join(self.cfg.config_dir, 'api_hour/logging.ini'))
+                self.cfg.set('logconfig',
+                             os.path.join(self.cfg.config_dir,
+                                          'api_hour/logging.ini'))
         else:
             # To avoid with Gunicorn 19 that the console it's empty when you test
             if not opts.errorlog:
@@ -46,7 +52,8 @@ class Application(GunicornApp):
     def load_default_config(self):
         # init configuration
         self.cfg = Config(self.usage, prog=self.prog)
-        self.cfg.set('worker_class', 'api_hour.Worker')  # Define api_hour.Worker as default
+         # Define api_hour.Worker as default
+        self.cfg.set('worker_class', 'api_hour.Worker')
 
     def load_config(self):
         # parse console args

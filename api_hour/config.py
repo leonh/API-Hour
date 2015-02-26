@@ -29,11 +29,13 @@ def get_config(overrides: dict) -> dict:
         conf = yaml.load(open(config_file, 'r'))
     except IOError as e:
         print(e)
-        print('Configuration file "%s" cannot be found. please fix this and retry.' % config_file)
+        print('Configuration file "%s" cannot be found. '
+              'please fix this and retry.' % config_file)
         sys.exit(1)
     LOG.info('Config file used: %s', config_file)
 
     return conf
+
 
 def validate_config_dir(val):
     if val is None:
@@ -43,13 +45,16 @@ def validate_config_dir(val):
         val = validate_string(val)
 
         # transform relative paths
-        path = os.path.abspath(os.path.normpath(os.path.join(util.getcwd(), val)))
+        path = os.path.abspath(
+            os.path.normpath(os.path.join(util.getcwd(), val))
+        )
 
         # test if the path exists
         if not os.path.exists(path):
             raise ConfigError("can't find a config directory in %r" % val)
 
         return path
+
 
 class ConfigDir(Setting):
     name = "config_dir"
@@ -60,6 +65,7 @@ class ConfigDir(Setting):
     desc = """\
         Config directory of your API-Hour Daemon. Example: /etc/hello/
         """
+
 
 class AutoConfig(Setting):
     name = "auto_config"
